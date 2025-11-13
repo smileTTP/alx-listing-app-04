@@ -1,9 +1,33 @@
-import Card from "@/components/common/Card";
 import CategoryIcon from "@/components/layout/CategoryIcon";
 import { CATEGORIES } from "@/constants";
-import { PROPERTYLISTINGSAMPLE } from "@/constants";
+import axios from "axios";
+import { useEffect, useState } from "react";
+import PropertyCard from "@/components/property/PropertyCard"; // Assume this component exists
 
 export default function Home() {
+
+  const [properties, setProperties] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchProperties = async () => {
+      try {
+        const response = await axios.get("/api/properties");
+        setProperties(response.data);
+      } catch (error) {
+        console.error("Error fetching properties:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchProperties();
+  }, []);
+
+  if (loading) {
+    return <p>Loading...</p>;
+  }
+
   return (
     <div className="max-w-[1728px]">
       <div className="flex gap-2 justify-center py-2 px-2 max-w-[1728px] min-w-[430px] overflow-hidden">
@@ -26,12 +50,9 @@ export default function Home() {
         </div>
         <div className="grid lg:grid-cols-3 sm:grid-cols-1 md:grid-cols-2">
           {
-            PROPERTYLISTINGSAMPLE.map((item, index) => (
-              <div key={index} className="px-4 py-6">
-              <Card image={item.image} name={item.name} address={item.address} rating={item.rating} offers={item.offers} price={item.price} category={item.category} discount={item.discount} description={item.description} images={item.images} reviews={item.reviews}/>
-              </div>
-            ))
-          }
+            properties.map((property) => (
+              <PropertyCard key={property.id} property={property} />
+          ))}
         </div>
         <div className="flex justify-center py-20 text-[20px] text-medium">
           <div className="flex flex-col items-center">

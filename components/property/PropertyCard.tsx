@@ -3,7 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { PropertyProps } from "@/interfaces";
 
-const Card = (property: PropertyProps) => {
+const Card: React.FC<{ property: PropertyProps }> = ({ property }) => {
     return (
         <div className="w-[378.5572204589844px] h-[422.6997985839844px]">
         <Link href={`/property/${property.name}`}>

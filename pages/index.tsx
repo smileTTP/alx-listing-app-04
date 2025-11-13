@@ -2,7 +2,7 @@ import CategoryIcon from "@/components/layout/CategoryIcon";
 import { CATEGORIES } from "@/constants";
 import axios from "axios";
 import { useEffect, useState } from "react";
-import PropertyCard from "@/components/property/PropertyCard"; // Assume this component exists
+import PropertyCard from "@/components/property/PropertyCard";
 
 export default function Home() {
 
